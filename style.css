@@ -45,3 +45,8 @@ body {
 .button:active {
     background: #333;
 }
+.button.large {
+    font-size: 16px;
+    padding: 5px;
+    font-weight: bold;
+}
