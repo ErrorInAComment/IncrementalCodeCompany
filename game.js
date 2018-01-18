@@ -39,6 +39,8 @@ var elLines         = document.getElementById('lines');
 
 var elWriteCode     = document.getElementById('write-code');
 
+var elReset         = document.getElementById('reset');
+
 /**
  * ========================================
  * Functions
@@ -73,10 +75,19 @@ function setLines(l)
 /**
  * Add lines when the user "writes"
  */
-function WriteCodeOnClick()
+function writeCodeOnClick()
 {
     // Add lines
     setLines(lines + config.linesPerClick);
+}
+
+/**
+ * Reset the game progress, when the user clicks the reset button in the menu
+ */
+function resetOnClick()
+{
+    // Reset lines of code
+    setLines(0);
 }
 
 /**
@@ -89,4 +100,7 @@ function WriteCodeOnClick()
 setLines((CookieHelper.get(config.cookie.indexes.lines) || 0));
 
 // Setup write code callback
-elWriteCode.onclick = WriteCodeOnClick;
+elWriteCode.onclick = writeCodeOnClick;
+
+// Setup reset game callback
+elReset.onclick = resetOnClick;
