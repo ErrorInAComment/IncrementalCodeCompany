@@ -104,3 +104,6 @@ elWriteCode.onclick = writeCodeOnClick;
 
 // Setup reset game callback
 elReset.onclick = resetOnClick;
+
+// Add greeting to console
+console.log('%c At last! A real developer came has finally come along!', 'font-weight: bold; color: #FFF; background: #000; padding: 2px');
