@@ -109,4 +109,4 @@ elWriteCode.onclick = writeCodeOnClick;
 elReset.onclick = resetOnClick;
 
 // Add greeting to console
-console.log('%c At last! A real developer came has finally come along!', 'font-weight: bold; color: #FFF; background: #000; padding: 2px');
+console.log('%c At last! A real developer has finally come along!', 'font-weight: bold; color: #FFF; background: #000; padding: 2px');
