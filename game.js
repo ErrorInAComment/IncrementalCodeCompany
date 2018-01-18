@@ -86,6 +86,9 @@ function writeCodeOnClick()
  */
 function resetOnClick()
 {
+    if(!confirm("Do you really want to reset all your progress?"))
+        return;
+
     // Reset lines of code
     setLines(0);
 }
