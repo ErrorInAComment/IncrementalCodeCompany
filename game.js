@@ -168,14 +168,14 @@ function upgradeKeyboardOnClick()
     let cost = keyboardUpgradeCost(upgrades.keyboard + 1);
 
     // Check the user can afford the upgrade
-    if(lines < cost)
+    if(money < cost)
         return;
 
     // Change upgrade level
     setKeyboardUpgrades(upgrades.keyboard + 1);
 
     // Pay for the upgrade
-    setLines(lines - cost);
+    setMoney(money - cost);
 }
 
 /**
@@ -188,6 +188,9 @@ function resetOnClick()
 
     // Reset lines of code
     setLines(0);
+
+    // Reset money
+    setMoney(0);
 
     // Reset upgrades
     setKeyboardUpgrades(1);
