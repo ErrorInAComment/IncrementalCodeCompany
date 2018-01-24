@@ -37,9 +37,19 @@ body {
     color: #2980b9;
 }
 
-#lines {
-    border-bottom: 1px solid black;
+.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.col-50 {
+    width: 50%;
+    float: left;
+}
+
+.currency {
     font-size: 16px;
+    margin: 2px 0;
 }
 
 .button {

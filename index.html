@@ -16,15 +16,26 @@ Released under the GNU General Public License v3.0
     <body>
         <h1 id="title">Incremental Code Company</h1>
         <div class="container">
-            <p id="lines"></p>
-            <div class="button large" id="write-code">Write Code</div>
-            <label>Do some work!</label>
+            <p id="lines" class="currency"></p>
+            <p id="money" class="currency"></p>
 
-            <h1 class="section-title">Upgrades</h1>
+            <h2 class="section-title">Actions</h2>
+            <div class="grid">
+                <div class="col-50">
+                    <div class="button large" id="write-code">Write Code</div>
+                    <label>Do some work!</label>
+                </div>
+                <div class="col-50">
+                    <div class="button large" id="sell-code">Sell Code</div>
+                    <label>Sell your code!</label>
+                </div>
+            </div>
+
+            <h2 class="section-title">Upgrades</h2>
             <button class="button" id="upgrade-keyboard">Upgrade keyboard</button>
-            <label>(<span id="upgrade-keyboard-cost"></span> lines of code)</label>
+            <label>($<span id="upgrade-keyboard-cost"></span>)</label>
 
-            <h1 class="section-title">Menu</h1>
+            <h2 class="section-title">Menu</h2>
             <button class="button" id="reset">Reset</button>
         </div>
         <div class="footer">
