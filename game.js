@@ -12,9 +12,11 @@
  */
 
 var config = {
+    version : 'v0.2.1-alpha',
     cookie : {
         days : 30,      // The amount of days the cookie is saved
         indexes : {
+            version : 'version',
             lines : 'lines',
             money : 'money',
             keyboard : 'keyboard'
@@ -133,6 +135,21 @@ function setKeyboardUpgrades(level)
 }
 
 /**
+ * Resets all progress
+ */
+function reset()
+{
+    // Reset lines of code
+    setLines(0);
+
+    // Reset money
+    setMoney(0);
+
+    // Reset upgrades
+    setKeyboardUpgrades(1);
+}
+
+/**
  * ========================================
  * Callbacks
  * ========================================
@@ -186,14 +203,7 @@ function resetOnClick()
     if(!confirm("Do you really want to reset all your progress?"))
         return;
 
-    // Reset lines of code
-    setLines(0);
-
-    // Reset money
-    setMoney(0);
-
-    // Reset upgrades
-    setKeyboardUpgrades(1);
+    reset();
 }
 
 /**
@@ -201,6 +211,15 @@ function resetOnClick()
  * Init code
  * ========================================
  */
+
+// Reset progress, if there is a version mismatch
+if(CookieHelper.get(config.cookie.indexes.version) != config.version)
+{
+    reset();
+}
+
+// Save version in cookie
+CookieHelper.set(config.cookie.indexes.version, config.version, config.cookie.days);
 
 // Retrieve lines from cookie or set to 0.
 setLines((CookieHelper.get(config.cookie.indexes.lines) || 0));
