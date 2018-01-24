@@ -12,7 +12,7 @@
  */
 
 var config = {
-    version : 'v0.2.1-alpha',
+    version : 'v0.3.0-alpha',
     cookie : {
         days : 30,      // The amount of days the cookie is saved
         indexes : {
