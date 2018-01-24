@@ -16,6 +16,7 @@ var config = {
         days : 30,      // The amount of days the cookie is saved
         indexes : {
             lines : 'lines',
+            money : 'money',
             keyboard : 'keyboard'
         }
     }
@@ -29,6 +30,8 @@ var config = {
 
 var lines; // The amount of lines of code
 
+var money; // The amount of money
+
 // The various upgrades and levels
 var upgrades = {
     keyboard : null
@@ -40,9 +43,11 @@ var upgrades = {
  * ========================================
  */
 
+var elMoney                 = document.getElementById('money');
 var elLines                 = document.getElementById('lines');
 
 var elWriteCode             = document.getElementById('write-code');
+var elSellCode              = document.getElementById('sell-code');
 
 var elUpgradeKeyboard       = document.getElementById('upgrade-keyboard');
 var elUpgradeKeyboardCost   = document.getElementById('upgrade-keyboard-cost');
@@ -56,6 +61,26 @@ var elReset                 = document.getElementById('reset');
  */
 
 /**
+ * Change the amount of money. Updates the HTML element and saves the amount in a cookie.
+ *
+ * @param m New amount of money
+ */
+function setMoney(m)
+{
+    // Parse to integer (In case m has been retrieved from a cookie)
+    m = parseInt(m);
+
+    // Update amount of money
+    money = m;
+
+    // Update the element showing the money
+    elMoney.innerHTML = '$' + m + '.';
+
+    // Save money in cookie
+    CookieHelper.set(config.cookie.indexes.money, m, config.cookie.days);
+}
+
+/**
  * Change the amount of lines. Updates the HTML element and saves the amount in a cookie.
  *
  * @param l New amount of lines
@@ -67,6 +92,7 @@ function setLines(l)
 
     // Update amount of lines
     lines = l;
+
     // Update the element showing the line count
     elLines.innerHTML = l + ' lines of code.';
 
@@ -122,6 +148,18 @@ function writeCodeOnClick()
 }
 
 /**
+ * Add money for the lines sold
+ */
+function sellCodeOnClick()
+{
+    // Add $2 per line of code
+    setMoney(money + lines * 2);
+
+    // Remove sold lines
+    setLines(0);
+}
+
+/**
  * Upgrade the keyboard when the user clicks the upgrade button
  */
 function upgradeKeyboardOnClick()
@@ -164,11 +202,17 @@ function resetOnClick()
 // Retrieve lines from cookie or set to 0.
 setLines((CookieHelper.get(config.cookie.indexes.lines) || 0));
 
+// Retrieve money from cookie or set to 0.
+setMoney((CookieHelper.get(config.cookie.indexes.money) || 0));
+
 // Retrieve upgrades from cookies or set default value
 setKeyboardUpgrades((CookieHelper.get(config.cookie.indexes.keyboard) || 1));
 
 // Setup write code callback
 elWriteCode.onclick = writeCodeOnClick;
+
+// Setup sell code callback
+elSellCode.onclick = sellCodeOnClick;
 
 // Setup upgrade keyboard callback
 elUpgradeKeyboard.onclick = upgradeKeyboardOnClick;
