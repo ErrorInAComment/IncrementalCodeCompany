@@ -21,6 +21,10 @@ var config = {
             money : 'money',
             keyboard : 'keyboard'
         }
+    },
+    codePrice : {
+        max : 10,
+        interval : 500
     }
 };
 
@@ -33,6 +37,9 @@ var config = {
 var lines; // The amount of lines of code
 
 var money; // The amount of money
+
+var codePrice; // The current cost of a line of code
+var codePriceGraph; // The graph object of the code cost
 
 // The various upgrades and levels
 var upgrades = {
@@ -48,6 +55,7 @@ var upgrades = {
 var elMoney                 = document.getElementById('money');
 var elLines                 = document.getElementById('lines');
 
+var elCodePrice             = document.getElementById('code-price');
 var elWriteCode             = document.getElementById('write-code');
 var elSellCode              = document.getElementById('sell-code');
 
@@ -151,6 +159,46 @@ function reset()
 
 /**
  * ========================================
+ * Recurring
+ * ========================================
+ */
+
+/**
+ * Change the code price, and update the graph accordingly
+ */
+function intervalCodePrice()
+{
+    // Get random number, and depending on the outcome either increase or decrease the price
+    let roll = Math.random() * 11;
+
+    // Up
+    if(roll > 3)
+    {
+        codePrice += 0.5 + Math.random() * 0.5;
+
+        // Prevent price being too high
+        if(codePrice > config.codePrice.max)
+            codePrice = config.codePrice.max;
+    }
+    // Down
+    else
+    {
+        codePrice -= 1.5 + Math.random();
+
+        // Prevent price being too low (below 0)
+        if(codePrice < 0)
+            codePrice = 0;
+    }
+
+    // Add price to graph
+    codePriceGraph.addNode(codePrice);
+
+    // Redraw graph
+    codePriceGraph.draw();
+}
+
+/**
+ * ========================================
  * Callbacks
  * ========================================
  */
@@ -165,12 +213,12 @@ function writeCodeOnClick()
 }
 
 /**
- * Add money for the lines sold
+ * Add money for the lines sold depending on the current code price
  */
 function sellCodeOnClick()
 {
     // Add $2 per line of code
-    setMoney(money + lines * 2);
+    setMoney(Math.floor(money + lines * codePrice));
 
     // Remove sold lines
     setLines(0);
@@ -244,3 +292,12 @@ elReset.onclick = resetOnClick;
 
 // Add greeting to console
 console.log('%c At last! A real developer has finally come along!', 'font-weight: bold; color: #FFF; background: #000; padding: 2px');
+
+// Set the current code price
+codePrice = 0;
+
+// Instantiate the code graph object
+codePriceGraph = new Graph(elCodePrice, config.codePrice.max, 50);
+
+// Setup the code price interval
+setInterval(intervalCodePrice, config.codePrice.interval);
